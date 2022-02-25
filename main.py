@@ -44,8 +44,6 @@ credentials = ServiceAccountCredentials.from_json_keyfile_dict(credential, scope
 
 gc = gspread.authorize(credentials)
 
-wks = gc.open('Where is the money Lebowski?').sheet1
-
 @app.route("/")
 def hello_world():
     return "hello world!"
@@ -73,8 +71,7 @@ def handle_message(event):
     wks.update_cell(1, 1, "test")
     line_bot_api.reply_message(
         event.reply_token,
-        # TextSendMessage(text=event.message.text))
-        TextSendMessage(text="test message"))
+        TextSendMessage(text=event.message.text))
 
 if __name__ == "__main__":
 #    app.run()
