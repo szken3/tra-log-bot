@@ -26,24 +26,27 @@ handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 scope = ['https://spreadsheets.google.com/feeds',
          'https://www.googleapis.com/auth/drive']
 
-print(os.environ['SHEET_PRIVATE_KEY'])
+credentials = ServiceAccountCredentials.from_json_keyfile_name('client_secret.json', scope)
 
-# 辞書オブジェクト。認証に必要な情報をHerokuの環境変数から呼び出している
-credential = {
-                "type": "service_account",
-                "project_id": os.environ['SHEET_PROJECT_ID'],
-                "private_key_id": os.environ['SHEET_PRIVATE_KEY_ID'],
-                "private_key": os.environ['SHEET_PRIVATE_KEY'],
-                # "private_key": os.environ['SHEET_PRIVATE_KEY'].replace('/n','/r'),
-                "client_email": os.environ['SHEET_CLIENT_EMAIL'],
-                "client_id": os.environ['SHEET_CLIENT_ID'],
-                "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-                "token_uri": "https://oauth2.googleapis.com/token",
-                "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-                "client_x509_cert_url":  os.environ['SHEET_CLIENT_X509_CERT_URL']
-             }
 
-credentials = ServiceAccountCredentials.from_json_keyfile_dict(credential, scope)
+# print(os.environ['SHEET_PRIVATE_KEY'])
+#
+# # 辞書オブジェクト。認証に必要な情報をHerokuの環境変数から呼び出している
+# credential = {
+#                 "type": "service_account",
+#                 "project_id": os.environ['SHEET_PROJECT_ID'],
+#                 "private_key_id": os.environ['SHEET_PRIVATE_KEY_ID'],
+#                 "private_key": os.environ['SHEET_PRIVATE_KEY'],
+#                 # "private_key": os.environ['SHEET_PRIVATE_KEY'].replace('/n','/r'),
+#                 "client_email": os.environ['SHEET_CLIENT_EMAIL'],
+#                 "client_id": os.environ['SHEET_CLIENT_ID'],
+#                 "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+#                 "token_uri": "https://oauth2.googleapis.com/token",
+#                 "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+#                 "client_x509_cert_url":  os.environ['SHEET_CLIENT_X509_CERT_URL']
+#              }
+#
+# credentials = ServiceAccountCredentials.from_json_keyfile_dict(credential, scope)
 
 gc = gspread.authorize(credentials)
 
@@ -70,8 +73,8 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    #wks = gc.open('トレーニング記録').sheet1
-    #wks.update_cell(1, 1, "test")
+    wks = gc.open('test').sheet1
+    wks.update_cell(1, 1, "test")
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=event.message.text))
