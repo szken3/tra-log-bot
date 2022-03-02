@@ -28,9 +28,7 @@ scope = ['https://spreadsheets.google.com/feeds',
 
 credentials = ServiceAccountCredentials.from_json_keyfile_name('client_secret.json', scope)
 
-key = credentials.getPrivateKey()
-
-print(key)
+print(credentials)
 
 # print(os.environ['SHEET_PRIVATE_KEY'])
 #
