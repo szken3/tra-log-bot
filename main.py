@@ -26,8 +26,6 @@ handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 scope = ['https://spreadsheets.google.com/feeds',
          'https://www.googleapis.com/auth/drive']
 
-#credentials = ServiceAccountCredentials.from_json_keyfile_name('client_secret.json', scope)
-
 print(os.environ['SHEET_PRIVATE_KEY'])
 
 # 辞書オブジェクト。認証に必要な情報をHerokuの環境変数から呼び出している
@@ -36,8 +34,6 @@ credential = {
                 "project_id": os.environ['SHEET_PROJECT_ID'],
                 "private_key_id": os.environ['SHEET_PRIVATE_KEY_ID'],
                 "private_key": os.environ['SHEET_PRIVATE_KEY'],
-                # "private_key": os.environ['SHEET_PRIVATE_KEY'].replace('/n','/r'),
-                #"private_key": os.environ.get('SHEET_PRIVATE_KEY').replace('\n', '\n'),
                 "client_email": os.environ['SHEET_CLIENT_EMAIL'],
                 "client_id": os.environ['SHEET_CLIENT_ID'],
                 "auth_uri": "https://accounts.google.com/o/oauth2/auth",
@@ -77,6 +73,10 @@ def callback():
 def handle_message(event):
     wks = gc.open('トレーニング記録').sheet1
     wks.update_cell(1, 1, "test")
+
+    profile = line_bot_api.get_profile(event.source.user_id)
+    print(profile.display_name)
+
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=event.message.text))
