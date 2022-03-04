@@ -42,8 +42,6 @@ credential = {
                 "client_x509_cert_url":  os.environ['SHEET_CLIENT_X509_CERT_URL']
              }
 
-
-
 credentials = ServiceAccountCredentials.from_json_keyfile_dict(credential, scope)
 
 gc = gspread.authorize(credentials)
@@ -71,11 +69,13 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    wks = gc.open('トレーニング記録').sheet1
-    wks.update_cell(1, 1, "test")
-
+    # ブック開いてユーザ名と同じ名前のシートを開く
+    workbook = gc.open_by_key(os.environ['SPREAD_SHEET_KEY'])
+    #workbook = gc.open('トレーニング記録')
     profile = line_bot_api.get_profile(event.source.user_id)
-    print(profile.display_name)
+    worksheet = workbook.worksheet(profile.display_name)
+
+    worksheet.update_cell(1, 1, "test")
 
     line_bot_api.reply_message(
         event.reply_token,
