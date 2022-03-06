@@ -81,10 +81,10 @@ def handle_message(event):
     print(splittext[0])
 
     if('/' in splittext[0]){
-        today = datetime.date.today()
-        year = today.year()
+        d_today = datetime.date.today()
+        #year = today.year()
         # day = today.year + '/' + splittext[0]
-        print(today)
+        # print(d_today)
     }
 
     line_bot_api.reply_message(
