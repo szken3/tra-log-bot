@@ -82,11 +82,11 @@ def handle_message(event):
     splittext = text.splitlines()
     print(splittext[0])
 
-    # if('/' in splittext[0]){
-    #     today = datetime.date.today()
-    #     day = today.year + '/' + splittext[0]
-    #     print(day)
-    # }
+    if('/' in splittext[0]){
+        # today = datetime.date.today()
+        # day = today.year + '/' + splittext[0]
+        # print(day)
+    }
 
     line_bot_api.reply_message(
         event.reply_token,
