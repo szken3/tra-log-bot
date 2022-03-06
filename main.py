@@ -14,6 +14,8 @@ from linebot.models import (
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
+import datetime
+
 app = Flask(__name__)
 
 #環境変数取得
@@ -77,8 +79,13 @@ def handle_message(event):
     worksheet.update_cell(1, 1, "test")
 
     text = event.message.text
+    splittext = text.splitlines()
 
-    print(text.splitlines())
+    if ('/', splittext[0]){
+        today = datetime.date.today()
+        day = today.year + '/' + splittext[0]
+        print(day)
+    }
 
     line_bot_api.reply_message(
         event.reply_token,
