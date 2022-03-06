@@ -71,11 +71,12 @@ def callback():
 def handle_message(event):
     # ブック開いてユーザ名と同じ名前のシートを開く
     workbook = gc.open_by_key(os.environ['SPREAD_SHEET_KEY'])
-    #workbook = gc.open('トレーニング記録')
     profile = line_bot_api.get_profile(event.source.user_id)
     worksheet = workbook.worksheet(profile.display_name)
 
     worksheet.update_cell(1, 1, "test")
+
+    print(event.message.text)
 
     line_bot_api.reply_message(
         event.reply_token,
