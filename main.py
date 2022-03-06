@@ -81,7 +81,7 @@ def handle_message(event):
     text = event.message.text
     splittext = text.splitlines()
 
-    if ('/' in splittext[0]){
+    if('/' in splittext[0]){
         today = datetime.date.today()
         day = today.year + '/' + splittext[0]
         print(day)
