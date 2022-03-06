@@ -76,11 +76,13 @@ def handle_message(event):
 
     worksheet.update_cell(1, 1, "test")
 
-    print(event.message.text)
+    text = event.message.text
+
+    print(text.splitlines())
 
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=event.message.text))
+        TextSendMessage(text))
 
 if __name__ == "__main__":
 #    app.run()
