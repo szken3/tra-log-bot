@@ -81,15 +81,19 @@ def handle_message(event):
     print(splittext[0])
 
     if('/' in splittext[0]){
-        d_today = datetime.date.now()
-        #year = today.year()
-        # day = today.year + '/' + splittext[0]
-        # print(d_today)
+        write_result(splittext)
+
     }
 
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text))
+
+def write_result(splittext):
+    # syntax errorになるから一旦スルー
+    # today = datetime.date.today()
+    day = '2022' + '/' + splittext[0]
+    print(day)
 
 if __name__ == "__main__":
 #    app.run()
