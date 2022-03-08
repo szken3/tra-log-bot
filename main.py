@@ -81,17 +81,19 @@ def handle_message(event):
     print(splittext[0])
 
     if ('/' in splittext[0]):
-        write_result(splittext)
-
+        write_result(splittext, worksheet)
 
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text))
 
-def write_result(splittext):
+def write_result(splittext, worksheet):
     today = datetime.date.today()
     day = str(today.year) + '/' + splittext[0]
-    print(day)
+    list_of_lists = worksheet.col_values(2)
+    list_of_lists_in = [ s for s in list_of_lists if day in s]
+
+    print(list_of_lists_in)
 
 if __name__ == "__main__":
 #    app.run()
