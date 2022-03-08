@@ -89,9 +89,8 @@ def handle_message(event):
         TextSendMessage(text))
 
 def write_result(splittext):
-    # syntax errorになるから一旦スルー
-    # today = datetime.date.today()
-    day = '2022' + '/' + splittext[0]
+    today = datetime.date.today()
+    day = today.year + '/' + splittext[0]
     print(day)
 
 if __name__ == "__main__":
