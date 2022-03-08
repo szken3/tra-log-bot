@@ -90,7 +90,7 @@ def handle_message(event):
 
 def write_result(splittext):
     today = datetime.date.today()
-    day = today.year + '/' + splittext[0]
+    day = str(today.year) + '/' + splittext[0]
     print(day)
 
 if __name__ == "__main__":
