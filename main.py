@@ -91,6 +91,7 @@ def write_result(splittext, worksheet):
     today = datetime.date.today()
     day = str(today.year) + '/' + splittext[0]
     list_of_lists = worksheet.col_values(2)
+    # これだとただの文字切り出し
     list_of_lists_in = [ s for s in list_of_lists if day in s]
 
     print(list_of_lists_in)
