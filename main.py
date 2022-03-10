@@ -104,7 +104,7 @@ def write_result(splittext, worksheet):
 
     for i in range(1, len(splittext)):
         content = splittext[i]
-        pattern = '.*?(\d+)'
+        pattern = '.*?(\d+).*'
         result = re.match(pattern, content)
         print(result)
 
