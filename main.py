@@ -102,9 +102,10 @@ def write_result(splittext, worksheet):
             break
         # ここまで来たら見つかってない
 
-    for i in range(1, len(splittext) - 1):
+    for i in range(1, len(splittext)):
         content = splittext[i]
-        pattern = '.*?(\d+)'
+        #pattern = '.*?(\d+)'
+        pattern = '(\d+)'
         result = re.match(pattern, content)
         print(result)
 
