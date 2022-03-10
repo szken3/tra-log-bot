@@ -15,6 +15,7 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
 import datetime
+import re
 
 app = Flask(__name__)
 
@@ -80,7 +81,7 @@ def handle_message(event):
 
     text = event.message.text
     splittext = text.splitlines()
-    print(splittext[0])
+    print(splittext)
 
     if ('/' in splittext[0]):
         write_result(splittext, worksheet)
@@ -95,13 +96,17 @@ def write_result(splittext, worksheet):
     day = str(today.year) + '/' + splittext[0]
     list_of_lists = worksheet.col_values(DAY_COLUMN)
     # 対象日のセル検索
+    day_row = 0
     for row in range(1, 500):
         if list_of_lists[row] == day:
-            list_of_lists_in = list_of_lists[row]
             break
-    #list_of_lists_in = [ s for s in list_of_lists if day == s]
+        # ここまで来たら見つかってない
 
-    print(list_of_lists_in)
+    for i in range(1, splittext.length - 1):
+        content = splittext[i]
+        pattern = '.*?(\d+)'
+        result = re.match(pattern, content)
+        print(result)
 
 if __name__ == "__main__":
 #    app.run()
