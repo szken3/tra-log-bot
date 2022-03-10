@@ -18,6 +18,8 @@ import datetime
 
 app = Flask(__name__)
 
+DAY_COLUMN = 2
+
 #環境変数取得
 YOUR_CHANNEL_ACCESS_TOKEN = os.environ["YOUR_CHANNEL_ACCESS_TOKEN"]
 YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
@@ -88,11 +90,16 @@ def handle_message(event):
         TextSendMessage(text))
 
 def write_result(splittext, worksheet):
+    #
     today = datetime.date.today()
     day = str(today.year) + '/' + splittext[0]
-    list_of_lists = worksheet.col_values(2)
-    # これだとただの文字切り出し
-    list_of_lists_in = [ s for s in list_of_lists if day == s]
+    list_of_lists = worksheet.col_values(DAY_COLUMN)
+    # 対象日のセル検索
+    for row in range(1, 500):
+        if list_of_lists[row] == day:
+            list_of_lists_in = list_of_lists[row]
+            break
+    #list_of_lists_in = [ s for s in list_of_lists if day == s]
 
     print(list_of_lists_in)
 
