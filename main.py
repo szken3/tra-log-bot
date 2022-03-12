@@ -104,10 +104,16 @@ def write_result(splittext, worksheet):
 
     for i in range(1, len(splittext)):
         content = splittext[i]
-        pattern = '.*?(\d+)'
-        result = re.match(pattern, content)
-        print(result.group(1))
+        # 数字のみ抜き出し
+        # pattern = '.*?(\d+)'
+        # result = re.match(pattern, content)
+        # print(result.group(1))
 
+        pattern = '.*?(\d+)'
+        result = re.findall(pattern, content)
+
+        print(result)
+        
 if __name__ == "__main__":
 #    app.run()
     port = int(os.getenv("PORT"))
