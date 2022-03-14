@@ -91,7 +91,7 @@ def handle_message(event):
         TextSendMessage(text))
 
 def write_result(splittext, worksheet):
-    #
+
     today = datetime.date.today()
     day = str(today.year) + '/' + splittext[0]
     list_of_lists = worksheet.col_values(DAY_COLUMN)
@@ -110,10 +110,17 @@ def write_result(splittext, worksheet):
         # print(result.group(1))
 
         pattern = '.*?(\d+)'
-        result = re.findall(pattern, content)
+        #result = re.findall(pattern, content)
+        result = re.match(pattern, content)
+        if result:
+            print(result.start())
+            print(result.end())
+            tmp[0] = content[:result.start() - 1]
+            tmp[1] = content[result.start():result.end()]
+            tmp[2] = content[result.end():]
+            print(tmp)
+        #print(result)
 
-        print(result)
-        
 if __name__ == "__main__":
 #    app.run()
     port = int(os.getenv("PORT"))
