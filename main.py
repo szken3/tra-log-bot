@@ -116,10 +116,10 @@ def write_result(splittext, worksheet):
         if result:
             print(result.start())
             print(result.end())
-            tmp[0] = content[:result.start() - 1]
-            tmp[1] = content[result.start():result.end()]
-            tmp[2] = content[result.end():]
-            print(tmp)
+            # tmp[0] = content[:result.start() - 1]
+            # tmp[1] = content[result.start():result.end()]
+            # tmp[2] = content[result.end():]
+            #print(tmp)
         #print(result)
 
 if __name__ == "__main__":
