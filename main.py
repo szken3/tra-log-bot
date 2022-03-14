@@ -131,13 +131,15 @@ def write_result(splittext, worksheet):
                     s_pos = i
                 else:
                     e_pos = i
-        tmp2 = []
-        if not s_pos == 0:
-            tmp2[0] = content[:s_pos - 1]
-            if s_pos < e_pos:
-                tmp2[1] = content[s_pos:e_pos]
-                tmp2[2] = content[e_pos:]
-        print(tmp2)
+        print(s_pos)
+        print(e_pos)
+        # tmp2 = []
+        # if not s_pos == 0:
+        #     tmp2[0] = content[:s_pos - 1]
+        #     if s_pos < e_pos:
+        #         tmp2[1] = content[s_pos:e_pos]
+        #         tmp2[2] = content[e_pos:]
+        # print(tmp2)
 if __name__ == "__main__":
 #    app.run()
     port = int(os.getenv("PORT"))
