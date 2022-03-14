@@ -110,7 +110,7 @@ def write_result(splittext, worksheet):
         # print(result.group(1))
 
         #pattern = '.*?(\d+)'
-        pattern = '(\d)'
+        pattern = '(\d+)'
         #result = re.findall(pattern, content)
         result = re.match(pattern, content)
         tmp = []
