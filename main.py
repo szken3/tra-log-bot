@@ -110,19 +110,34 @@ def write_result(splittext, worksheet):
         # print(result.group(1))
 
         #pattern = '.*?(\d+)'
-        pattern = '(\d+)'
+        #pattern = '(\d+)'
         #result = re.findall(pattern, content)
-        result = re.match(pattern, content)
-        tmp = []
-        if result:
-            print(result.start())
-            print(result.end())
+        #result = re.match(pattern, content)
+        # tmp = []
+        # if result:
+        #     print(result.start())
+        #     print(result.end())
             # tmp[0] = content[:result.start() - 1]
             # tmp[1] = content[result.start():result.end()]
             # tmp[2] = content[result.end():]
             #print(tmp)
         #print(result)
-
+        s_pos = 0
+        e_pos = 0
+        for i in range(len(content)):
+            tmp = content[i]
+            if tmp.isnumeric():
+                if s_pos == 0:
+                    s_pos = i
+                else:
+                    e_pos = i
+        tmp2 = []
+        if not s_pos == 0:
+            tmp2[0] = content[:s_pos - 1]
+            if s_pos < e_pos:
+                tmp2[1] = content[s_pos:e_pos]
+                tmp2[2] = content[e_pos:]
+        print(tmp2)
 if __name__ == "__main__":
 #    app.run()
     port = int(os.getenv("PORT"))
