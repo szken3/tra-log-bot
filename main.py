@@ -134,7 +134,7 @@ def write_result(splittext, worksheet):
         print(s_pos)
         print(e_pos)
         print(content[:s_pos])
-        print(content[s_pos + 1:e_pos])
+        print(content[s_pos:e_pos + 1])
         # tmp2 = []
         # if not s_pos == 0:
         #     tmp2[0] = content[:s_pos - 1]
