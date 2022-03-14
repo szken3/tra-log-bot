@@ -112,6 +112,7 @@ def write_result(splittext, worksheet):
         pattern = '.*?(\d+)'
         #result = re.findall(pattern, content)
         result = re.match(pattern, content)
+        tmp = []
         if result:
             print(result.start())
             print(result.end())
