@@ -135,14 +135,15 @@ def write_result(split_text, worksheet):
                 tmp = content[s_pos:]
                 min_pos = tmp.find('分')
                 sec_pos = tmp.find('秒')
-                print(tmp)
+                #print(tmp)
                 min = 0
                 sec = 0
                 if not min_pos == (-1):
-                    print(min_pos)
-                    print(tmp[:(min_pos + 1)])
+                    #print(min_pos)
+                    #print(tmp[:(min_pos + 1)])
+                    print('min_pos')
                     print(tmp[:min_pos])
-                    print(tmp[:(min_pos - 1)])
+                    #print(tmp[:(min_pos - 1)])
                     #min = int(tmp[:min_pos])
                 if not sec_pos == (-1):
                     sec = int(tmp[min_pos + 1:sec_pos])
