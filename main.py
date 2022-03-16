@@ -80,20 +80,21 @@ def handle_message(event):
     worksheet.update_cell(1, 1, "test")
 
     text = event.message.text
-    splittext = text.splitlines()
-    print(splittext)
+    split_text = text.splitlines()
+    print(split_text)
 
-    if ('/' in splittext[0]):
-        write_result(splittext, worksheet)
+    # "/"が入ってたら日付扱い
+    if ('/' in split_text[0]):
+        write_result(split_text, worksheet)
 
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text))
 
-def write_result(splittext, worksheet):
+def write_result(split_text, worksheet):
 
     today = datetime.date.today()
-    day = str(today.year) + '/' + splittext[0]
+    day = str(today.year) + '/' + split_text[0]
     list_of_lists = worksheet.col_values(DAY_COLUMN)
     # 対象日のセル検索
     day_row = 0
@@ -102,8 +103,8 @@ def write_result(splittext, worksheet):
             break
         # ここまで来たら見つかってない
 
-    for i in range(1, len(splittext)):
-        content = splittext[i]
+    for i in range(1, len(split_text)):
+        content = split_text[i]
         # 数字のみ抜き出し
         # pattern = '.*?(\d+)'
         # result = re.match(pattern, content)
@@ -133,8 +134,30 @@ def write_result(splittext, worksheet):
                     e_pos = i
         print(s_pos)
         print(e_pos)
-        print(content[:s_pos])
-        print(content[s_pos:e_pos + 1])
+
+        tra_event = ""
+        tra_count = 0
+
+        # 単位に分と秒が入っていると話が変わるので一旦考えない
+
+        if not s_pos == 0:
+            # 種目(ここは純粋にこれでOK)
+            tra_event = content[:s_pos]
+            # print(content[:s_pos])
+            # 回数取得
+            if not e_pos == 0:
+                tmp = content[s_pos:e_pos + 1]
+                if not tmp.find('×') == (-1):
+                    f_part = tmp[:tmp.find('×')]
+                    e_part = tmp[tmp.find('×') + 1:]
+                    print('part')
+                    print(f_part)
+                    print(e_part)
+                    #
+                    # print(content[s_pos:e_pos + 1])
+        else:
+            return
+
         if not e_pos == len(content):
             print(content[e_pos:])
         # tmp2 = []
