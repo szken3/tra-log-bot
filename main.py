@@ -106,7 +106,7 @@ def write_result(split_text, worksheet):
     # 一行ずつ処理
     for i in range(1, len(split_text)):
         # 空白を潰す
-        content = resub(r"\s", "", split_text[i])
+        content = re.sub(r"\s", "", split_text[i])
         s_pos = 0
         e_pos = 0
         for i in range(len(content)):
