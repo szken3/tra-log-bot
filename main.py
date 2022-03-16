@@ -125,8 +125,8 @@ def write_result(split_text, worksheet):
         if not s_pos == 0:
             # 種目(ここは純粋にこれでOK)
             tra_event = content[:s_pos]
-            # 回数取得
 
+            # 回数取得
             # 時間表記だった場合
             if (not content.find('分') == (-1)) or (not content.find('秒') == (-1)):
                 tmp = content[s_pos:]
@@ -142,6 +142,8 @@ def write_result(split_text, worksheet):
                 # 型が混じるから名前変えた方がいいかも
                 # もしくはstringに統一
                 tra_count = datetime.time(0, min, sec, 0)
+
+            # 回数表記だった場合
             else:
                 if not e_pos == 0:
                     # 数字の最初と最後を含むテキスト抜き出し
@@ -151,7 +153,7 @@ def write_result(split_text, worksheet):
                     if not mul_pos == (-1):
                         f_part = tmp[:mul_pos]
                         e_part = tmp[mul_pos + 1:]
-                        tra_event = int(f_part) * int(e_part)
+                        tra_count = int(f_part) * int(e_part)
                     else:
                         tra_count = tmp
         print(tra_event)
