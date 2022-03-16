@@ -130,12 +130,11 @@ def write_result(split_text, worksheet):
             tra_event = content[:s_pos]
             # 回数取得
 
-            min_pos = content.find('分')
-            sec_pos = content.find('秒')
-
             # 時間表記だった場合
-            if (not min_pos == (-1)) or (not sec_pos == (-1)):
+            if (not content.find('分') == (-1)) or (not content.find('秒') == (-1)):
                 tmp = content[s_pos:]
+                min_pos = tmp.find('分')
+                sec_pos = tmp.find('秒')
                 print(tmp)
                 min = 0
                 sec = 0
