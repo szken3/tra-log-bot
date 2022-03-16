@@ -139,6 +139,7 @@ def write_result(split_text, worksheet):
                 min = 0
                 sec = 0
                 if not min_pos == (-1):
+                    print(min_pos)
                     print(tmp[:(min_pos + 1)])
                     print(tmp[:min_pos])
                     print(tmp[:(min_pos - 1)])
