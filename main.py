@@ -141,12 +141,9 @@ def write_result(split_text, worksheet):
                 if not min_pos == (-1):
                     min = int(tmp[:min_pos])
                 if not sec_pos == (-1):
-                    #sec = int(tmp[min_pos:sec_pos])
-                    #print(tmp[min_pos:sec_pos])
-                    print('sec')
-                    print(tmp[min_pos + 1:sec_pos])
-                #t = datetime.time(0, min, sec, 0)
-                # print(t)
+                    sec = int(tmp[min_pos + 1:sec_pos])
+                t = datetime.time(0, min, sec, 0)
+                print(t)
 
             if not e_pos == 0:
                 # 数字の最初と最後を含むテキスト抜き出し
