@@ -147,14 +147,19 @@ def write_result(split_text, worksheet):
             # 回数取得
             if not e_pos == 0:
                 tmp = content[s_pos:e_pos + 1]
-                if not tmp.find('×') == (-1):
-                    f_part = tmp[:tmp.find('×')]
-                    e_part = tmp[tmp.find('×') + 1:]
+                mul_pos = tmp.find('×')
+                if not mul_pos == (-1):
+                    f_part = tmp[:mul_pos]
+                    e_part = tmp[mul_pos + 1:]
+                    tra_event = int(f_part) * int(e_part)
                     print('part')
                     print(f_part)
                     print(e_part)
+                    print(tra_event)
                     #
                     # print(content[s_pos:e_pos + 1])
+                else:
+                    tra_count = tmp
         else:
             return
 
