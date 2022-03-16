@@ -103,26 +103,10 @@ def write_result(split_text, worksheet):
             break
         # ここまで来たら見つかってない
 
+    # 一行ずつ処理
     for i in range(1, len(split_text)):
-        content = split_text[i]
-        # 数字のみ抜き出し
-        # pattern = '.*?(\d+)'
-        # result = re.match(pattern, content)
-        # print(result.group(1))
-
-        #pattern = '.*?(\d+)'
-        #pattern = '(\d+)'
-        #result = re.findall(pattern, content)
-        #result = re.match(pattern, content)
-        # tmp = []
-        # if result:
-        #     print(result.start())
-        #     print(result.end())
-            # tmp[0] = content[:result.start() - 1]
-            # tmp[1] = content[result.start():result.end()]
-            # tmp[2] = content[result.end():]
-            #print(tmp)
-        #print(result)
+        # 空白を潰す
+        content = resub(r"\s", "", split_text[i])
         s_pos = 0
         e_pos = 0
         for i in range(len(content)):
@@ -140,38 +124,44 @@ def write_result(split_text, worksheet):
 
         # 単位に分と秒が入っていると話が変わるので一旦考えない
 
+        #
         if not s_pos == 0:
             # 種目(ここは純粋にこれでOK)
             tra_event = content[:s_pos]
-            # print(content[:s_pos])
             # 回数取得
+
+            min_pos = content.find('分')
+            sec_pos = content.find('秒')
+
+            # 時間表記だった場合
+            if (not min_pos == (-1)) or (not sec_pos == (-1)):
+                tmp = content[s_pos:]
+                min = 0
+                sec = 0
+                if not min_pos == (-1):
+                    min = int(tmp[:min_pos])
+                if not sec_pos == (-1):
+                    sec = int(tmp[min_pos + 1:sec_pos])
+
+                t = datetime.time(0, min, sec, 0)
+                print(t)
+
             if not e_pos == 0:
+                # 数字の最初と最後を含むテキスト抜き出し
                 tmp = content[s_pos:e_pos + 1]
+                # 掛け算表記のみやる
                 mul_pos = tmp.find('×')
                 if not mul_pos == (-1):
                     f_part = tmp[:mul_pos]
                     e_part = tmp[mul_pos + 1:]
                     tra_event = int(f_part) * int(e_part)
-                    print('part')
-                    print(f_part)
-                    print(e_part)
                     print(tra_event)
-                    #
-                    # print(content[s_pos:e_pos + 1])
                 else:
                     tra_count = tmp
-        else:
-            return
 
         if not e_pos == len(content):
             print(content[e_pos:])
-        # tmp2 = []
-        # if not s_pos == 0:
-        #     tmp2[0] = content[:s_pos - 1]
-        #     if s_pos < e_pos:
-        #         tmp2[1] = content[s_pos:e_pos]
-        #         tmp2[2] = content[e_pos:]
-        # print(tmp2)
+
 if __name__ == "__main__":
 #    app.run()
     port = int(os.getenv("PORT"))
