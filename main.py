@@ -141,8 +141,9 @@ def write_result(split_text, worksheet):
                 if not min_pos == (-1):
                     min = int(tmp[:min_pos])
                 if not sec_pos == (-1):
-                    sec = int(tmp[min_pos:sec_pos])
-
+                    #sec = int(tmp[min_pos:sec_pos])
+                    print(tmp[min_pos:sec_pos])
+                    prtin(tmp[min_pos + 1:sec_pos])
                 #t = datetime.time(0, min, sec, 0)
                 # print(t)
 
