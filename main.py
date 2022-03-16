@@ -136,6 +136,7 @@ def write_result(split_text, worksheet):
             # 時間表記だった場合
             if (not min_pos == (-1)) or (not sec_pos == (-1)):
                 tmp = content[s_pos:]
+                print(tmp)
                 min = 0
                 sec = 0
                 if not min_pos == (-1):
