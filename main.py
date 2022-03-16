@@ -116,14 +116,11 @@ def write_result(split_text, worksheet):
                     s_pos = i
                 else:
                     e_pos = i
-        print(s_pos)
-        print(e_pos)
+        # print(s_pos)
+        # print(e_pos)
 
         tra_event = ""
         tra_count = 0
-
-        # 単位に分と秒が入っていると話が変わるので一旦考えない
-
         #
         if not s_pos == 0:
             # 種目(ここは純粋にこれでOK)
@@ -135,15 +132,16 @@ def write_result(split_text, worksheet):
                 tmp = content[s_pos:]
                 min_pos = tmp.find('分')
                 sec_pos = tmp.find('秒')
-                #print(tmp)
                 min = 0
                 sec = 0
                 if not min_pos == (-1):
                     min = int(tmp[:min_pos])
                 if not sec_pos == (-1):
                     sec = int(tmp[min_pos + 1:sec_pos])
-                t = datetime.time(0, min, sec, 0)
-                print(t)
+
+                # 型が混じるから名前変えた方がいいかも
+                # もしくはstringに統一
+                tra_count = datetime.time(0, min, sec, 0)
 
             if not e_pos == 0:
                 # 数字の最初と最後を含むテキスト抜き出し
@@ -154,12 +152,10 @@ def write_result(split_text, worksheet):
                     f_part = tmp[:mul_pos]
                     e_part = tmp[mul_pos + 1:]
                     tra_event = int(f_part) * int(e_part)
-                    print(tra_event)
                 else:
                     tra_count = tmp
-
-        if not e_pos == len(content):
-            print(content[e_pos:])
+        print(tra_event)
+        print(tra_count)
 
 if __name__ == "__main__":
 #    app.run()
