@@ -20,6 +20,7 @@ import re
 app = Flask(__name__)
 
 DAY_COLUMN = 2
+TRAININNG_EVENT_ROW = 4
 
 #環境変数取得
 YOUR_CHANNEL_ACCESS_TOKEN = os.environ["YOUR_CHANNEL_ACCESS_TOKEN"]
@@ -87,9 +88,10 @@ def handle_message(event):
     if ('/' in split_text[0]):
         write_result(split_text, worksheet)
 
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text))
+    # オウム返し
+    # line_bot_api.reply_message(
+    #     event.reply_token,
+    #     TextSendMessage(text))
 
 def write_result(split_text, worksheet):
 
@@ -116,8 +118,6 @@ def write_result(split_text, worksheet):
                     s_pos = i
                 else:
                     e_pos = i
-        # print(s_pos)
-        # print(e_pos)
 
         tra_event = ""
         tra_count = 0
@@ -158,6 +158,9 @@ def write_result(split_text, worksheet):
                         tra_count = tmp
         print(tra_event)
         print(tra_count)
+
+        # 種目を検索
+        # 書き込む
 
 if __name__ == "__main__":
 #    app.run()
