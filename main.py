@@ -172,10 +172,10 @@ def write_result(split_text, worksheet):
 
         if not has_tra_event:
             # 存在しない種目の場合は作る
-            worksheet.update_cell(TRAININNG_EVENT_ROW, tra_event_col + 1, tra_event)
-            worksheet.update_cell(day_row, tra_event_col + 1, tra_count)
+            worksheet.update_cell(TRAININNG_EVENT_ROW, tra_event_col + 2, tra_event)
+            worksheet.update_cell(day_row + 1, tra_event_col + 2, tra_count)
         else:
-            worksheet.update_cell(day_row, tra_event_col, tra_count)
+            worksheet.update_cell(day_row + 1, tra_event_col + 1, tra_count)
 
 
 if __name__ == "__main__":
