@@ -142,7 +142,8 @@ def write_result(split_text, worksheet):
 
                 # 型が混じるから名前変えた方がいいかも
                 # もしくはstringに統一
-                tra_count = datetime.time(0, min, sec, 0)
+                tra_count = str(datetime.time(0, min, sec, 0))
+
 
             # 回数表記だった場合
             else:
