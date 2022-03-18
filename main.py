@@ -162,22 +162,23 @@ def write_result(split_text, worksheet):
 
         # 種目の特定
         list_of_lists = worksheet.row_values(TRAININNG_EVENT_ROW)
+        print(len(list_of_lists))
         tra_event_col = 0
         has_tra_event = False
         last_pos = 0
-        for tra_event_col in range(1, 10):
-            if list_of_lists[tra_event_col] == tra_event:
-                has_tra_event = True
-                break
-            elif list_of_lists[tra_event_col]:
-                last_pos = tra_event_col
+        # for tra_event_col in range(1, 10):
+        #     if list_of_lists[tra_event_col] == tra_event:
+        #         has_tra_event = True
+        #         break
+        #     elif list_of_lists[tra_event_col]:
+        #         last_pos = tra_event_col
 
-        if not has_tra_event:
-            # 存在しない種目の場合は作る
-            worksheet.update_cell(TRAININNG_EVENT_ROW, last_pos + 1, tra_event)
-            worksheet.update_cell(day_row, last_pos + 1, tra_count)
-        else:
-            worksheet.update_cell(day_row, tra_event_col, tra_count)
+        # if not has_tra_event:
+        #     # 存在しない種目の場合は作る
+        #     worksheet.update_cell(TRAININNG_EVENT_ROW, last_pos + 1, tra_event)
+        #     worksheet.update_cell(day_row, last_pos + 1, tra_count)
+        # else:
+        #     worksheet.update_cell(day_row, tra_event_col, tra_count)
 
 
 if __name__ == "__main__":
