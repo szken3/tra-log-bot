@@ -84,7 +84,7 @@ def handle_message(event):
     split_text = text.splitlines()
     print(split_text)
 
-    # "/"が入ってたら日付扱い
+    # "/"が入ってたら日付扱いで書き込みする
     if ('/' in split_text[0]):
         write_result(split_text, worksheet)
 
@@ -95,17 +95,19 @@ def handle_message(event):
 
 def write_result(split_text, worksheet):
 
+    # 日付は yyyy/もらった日付
     today = datetime.date.today()
     day = str(today.year) + '/' + split_text[0]
-    list_of_lists = worksheet.col_values(DAY_COLUMN)
+
     # 対象日のセル検索
+    list_of_lists = worksheet.col_values(DAY_COLUMN)
     day_row = 0
-    for row in range(1, 500):
-        if list_of_lists[row] == day:
+    for day_row in range(1, 500):
+        if list_of_lists[day_row] == day:
             break
         # ここまで来たら見つかってない
 
-    # 一行ずつ処理
+    # メッセージを一行ずつ処理
     for i in range(1, len(split_text)):
         # 空白を潰す
         content = re.sub(r"\s", "", split_text[i])
@@ -121,9 +123,8 @@ def write_result(split_text, worksheet):
 
         tra_event = ""
         tra_count = 0
-        #
         if not s_pos == 0:
-            # 種目(ここは純粋にこれでOK)
+            # 種目取得
             tra_event = content[:s_pos]
 
             # 回数取得
@@ -159,8 +160,25 @@ def write_result(split_text, worksheet):
         print(tra_event)
         print(tra_count)
 
-        # 種目を検索
-        # 書き込む
+        # 種目の特定
+        list_of_lists = worksheet.row_values(TRAININNG_EVENT_ROW)
+        tra_event_col = 0
+        has_tra_event = false
+        last_pos = 0
+        for tra_event_col in range(1, 10):
+            if list_of_lists[tra_event_col] == tra_event:
+                has_tra_event = true
+                break
+            elif list_of_lists[tra_event_col]:
+                last_pos = tra_event_col
+
+        if not has_tra_event:
+            # 存在しない種目の場合は作る
+            worksheet.update_cell(TRAININNG_EVENT_ROW, last_pos + 1, tra_event)
+            worksheet.update_cell(day_row, last_pos + 1, tra_count)
+        else:
+            worksheet.update_cell(day_row, tra_event_col, tra_count)
+
 
 if __name__ == "__main__":
 #    app.run()
