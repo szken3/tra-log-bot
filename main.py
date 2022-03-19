@@ -74,17 +74,22 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     # ブック開いてユーザ名と同じ名前のシートを開く
-    workbook = gc.open_by_key(os.environ['SPREAD_SHEET_KEY'])
+
+    # TODO:
+    # 友だちのアカウント情報しか取れない?
+    # 要検証
     profile = line_bot_api.get_profile(event.source.user_id)
+    print(profile.display_name)
+
+    workbook = gc.open_by_key(os.environ['SPREAD_SHEET_KEY'])
     worksheet = workbook.worksheet(profile.display_name)
 
-    worksheet.update_cell(1, 1, "test")
-
+    # メッセージを行ごとにバラバラにする
     text = event.message.text
     split_text = text.splitlines()
     print(split_text)
 
-    # "/"が入ってたら日付扱いで書き込みする
+    # 先頭の行に"/"が入ってたら日付扱いで書き込みする
     if ('/' in split_text[0]):
         write_result(split_text, worksheet)
 
@@ -93,7 +98,11 @@ def handle_message(event):
     #     event.reply_token,
     #     TextSendMessage(text))
 
+
 def write_result(split_text, worksheet):
+
+    # TODO:
+    # 3/12AM みたいなことされたけど対応しない
 
     # 日付は yyyy/もらった日付
     today = datetime.date.today()
@@ -102,7 +111,7 @@ def write_result(split_text, worksheet):
     # 対象日のセル検索
     list_of_lists = worksheet.col_values(DAY_COLUMN)
     day_row = 0
-    for day_row in range(1, 500):
+    for day_row in range(1, len(list_of_lists)):
         if list_of_lists[day_row] == day:
             break
         # ここまで来たら見つかってない
@@ -111,6 +120,8 @@ def write_result(split_text, worksheet):
     for i in range(1, len(split_text)):
         # 空白を潰す
         content = re.sub(r"\s", "", split_text[i])
+
+        # 数字の最初と最後の位置を取得
         s_pos = 0
         e_pos = 0
         for i in range(len(content)):
@@ -140,10 +151,11 @@ def write_result(split_text, worksheet):
                 if not sec_pos == (-1):
                     sec = int(tmp[min_pos + 1:sec_pos])
 
-                # 型が混じるから名前変えた方がいいかも
-                # もしくはstringに統一
-                tra_count = str(datetime.time(0, min, sec, 0))
+                # TODO:
+                # 掛け算対応
 
+                # stringに統一
+                tra_count = str(datetime.time(0, min, sec, 0))
 
             # 回数表記だった場合
             else:
@@ -158,12 +170,9 @@ def write_result(split_text, worksheet):
                         tra_count = int(f_part) * int(e_part)
                     else:
                         tra_count = tmp
-        print(tra_event)
-        print(tra_count)
 
         # 種目の特定
         list_of_lists = worksheet.row_values(TRAININNG_EVENT_ROW)
-        # print(len(list_of_lists))
         tra_event_col = 0
         has_tra_event = False
         for tra_event_col in range(1, len(list_of_lists)):
