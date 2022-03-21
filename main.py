@@ -125,8 +125,8 @@ def write_result(split_text, worksheet):
         s_pos = 0
         e_pos = 0
         for i in range(len(content)):
-            tmp = content[i]
-            if tmp.isnumeric():
+            count_part = content[i]
+            if count_part.isnumeric():
                 if s_pos == 0:
                     s_pos = i
                 else:
@@ -141,45 +141,53 @@ def write_result(split_text, worksheet):
             # 回数取得
             # 時間表記だった場合
             if (not content.find('分') == (-1)) or (not content.find('秒') == (-1)):
-                tmp = content[s_pos:]
-                min_pos = tmp.find('分')
-                sec_pos = tmp.find('秒')
+                count_part = content[s_pos:]
+                min_pos = count_part.find('分')
+                sec_pos = count_part.find('秒')
                 min = 0
                 sec = 0
                 if not min_pos == (-1):
-                    min = int(tmp[:min_pos])
-                if not sec_pos == (-1):
-                    sec = int(tmp[min_pos + 1:sec_pos])
+                    min = int(count_part[:min_pos])
+                    if not sec_pos == (-1):
+                        sec = int(count_part[min_pos + 1:sec_pos])
+                else:
+                    sec = int(count_part[:sec_pos])
 
-                # TODO:
-                # 掛け算対応
+                # 掛け算
+                mul_pos = count_part.find('×')
+                if not mul_pos == (-1):
+                    e_part = count_part[mul_pos + 1:]
+                    tra_time_count = datetime.time(0, min, sec, 0) * int(e_part)
+                else:
+                    tra_time_count = datetime.time(0, min, sec, 0)
 
                 # stringに統一
-                tra_count = str(datetime.time(0, min, sec, 0))
+                tra_count = str(tra_time_count)
 
             # 回数表記だった場合
             else:
                 if not e_pos == 0:
                     # 数字の最初と最後を含むテキスト抜き出し
-                    tmp = content[s_pos:e_pos + 1]
+                    count_part = content[s_pos:e_pos + 1]
                     # 掛け算表記のみやる
-                    mul_pos = tmp.find('×')
+                    mul_pos = count_part.find('×')
                     if not mul_pos == (-1):
-                        f_part = tmp[:mul_pos]
-                        e_part = tmp[mul_pos + 1:]
+                        f_part = count_part[:mul_pos]
+                        e_part = count_part[mul_pos + 1:]
                         tra_count = int(f_part) * int(e_part)
                     else:
-                        tra_count = tmp
+                        tra_count = count_part
 
         # 種目の特定
-        list_of_lists = worksheet.row_values(TRAININNG_EVENT_ROW)
         tra_event_col = 0
         has_tra_event = False
+        list_of_lists = worksheet.row_values(TRAININNG_EVENT_ROW)
         for tra_event_col in range(1, len(list_of_lists)):
             if list_of_lists[tra_event_col] == tra_event:
                 has_tra_event = True
                 break
 
+        # ここのマジックナンバーは位置の調整用のため特に意味なし
         if not has_tra_event:
             # 存在しない種目の場合は作る
             worksheet.update_cell(TRAININNG_EVENT_ROW, tra_event_col + 2, tra_event)
