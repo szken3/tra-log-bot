@@ -163,12 +163,9 @@ def write_result(split_text, worksheet):
                     if sec >= 60:
                         min = min + (sec // 60)
                         sec = sec % 60
-                    tra_time_count = datetime.time(0, min * int(e_part), sec * int(e_part), 0)
-                else:
-                    tra_time_count = datetime.time(0, min, sec, 0)
-
+                        
                 # stringに統一
-                tra_count = str(tra_time_count)
+                tra_count = str(datetime.time(0, min, sec, 0))
 
             # 回数表記だった場合
             else:
