@@ -157,6 +157,12 @@ def write_result(split_text, worksheet):
                 mul_pos = count_part.find('×')
                 if not mul_pos == (-1):
                     e_part = count_part[mul_pos + 1:]
+                    min = min * int(e_part)
+                    sec = sec * int(e_part)
+                    # 秒だけ繰り上がり考慮
+                    if sec >= 60:
+                        min = min + (sec // 60)
+                        sec = sec % 60
                     tra_time_count = datetime.time(0, min * int(e_part), sec * int(e_part), 0)
                 else:
                     tra_time_count = datetime.time(0, min, sec, 0)
