@@ -157,7 +157,7 @@ def write_result(split_text, worksheet):
                 mul_pos = count_part.find('×')
                 if not mul_pos == (-1):
                     e_part = count_part[mul_pos + 1:]
-                    tra_time_count = datetime.time(0, min, sec, 0) * int(e_part)
+                    tra_time_count = datetime.time(0, min * int(e_part), sec * int(e_part), 0)
                 else:
                     tra_time_count = datetime.time(0, min, sec, 0)
 
