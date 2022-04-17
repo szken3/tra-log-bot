@@ -117,10 +117,10 @@ def write_result(split_text, worksheet):
         # ここまで来たら見つかってない
 
     # メッセージを一行ずつ処理
-    for i in range(1, len(split_text)):
+    for text in split_text:
         # 空白を潰す
-        content = re.sub(r"\s", "", split_text[i])
-
+        # content = re.sub(r"\s", "", split_text[i])
+        content = re.sub(r"\s", "", text)
         # 数字の最初と最後の位置を取得
         s_pos = 0
         e_pos = 0
@@ -163,7 +163,7 @@ def write_result(split_text, worksheet):
                     if sec >= 60:
                         min = min + (sec // 60)
                         sec = sec % 60
-                        
+
                 # stringに統一
                 tra_count = str(datetime.time(0, min, sec, 0))
 
